@@ -10,24 +10,50 @@
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
             <!--<Setter Property="WindowState" Value="Maximized"/>-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding HeaderHeightSize, FallbackValue=46}"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="{StaticResource BackGroundVeryLightBrush}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Padding="5" Style="{StaticResource SystemIconButton}">
+                                        <Image Source="images/logo/logo_laugh_regular.png"/>
+                                    </Button>
+                                    <Viewbox Grid.Column="1" Grid.ColumnSpan="3" Margin="3">
+                                        <TextBlock FontFamily="{StaticResource Lato-Italic}" FontSize="{StaticResource LargeFontSize}" Margin="-25 0 0 0">
+                                            <Run Text="I" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="r" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="s" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="i" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="g" Foreground="{StaticResource WordBlueBrush}"/>
+                                        </TextBlock>
+                                    </Viewbox>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <Button Style="{StaticResource WindowControlButton}" Command="{Binding MinimizeCommand}" Content="_"/>
+                                        <Button Style="{StaticResource WindowControlButton}" Command="{Binding MaximizeCommand}" Content="[ ]"/>
+                                        <Button Style="{StaticResource WindowControlButton}" Command="{Binding CloseCommand}" Content="X"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <WindowChrome.WindowChrome>
         <WindowChrome
-            ResizeBorderThickness="6"
-            CaptionHeight="52"
+            CaptionHeight="{Binding HeaderHeight}"
             GlassFrameThickness="0"
             CornerRadius="0"
             />
     </WindowChrome.WindowChrome>
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-regular}"/>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-BlackItalic}"/>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-Hairline}"/>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-regular}"/>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-Semibold}"/>
-            <TextBlock Text="Test" FontSize="40" FontFamily="{StaticResource Lato-Italic}"/>
-        </StackPanel>
     </Grid>
 </Window>

@@ -40,6 +40,7 @@ namespace Example1
         public SerilPortFunc()
         {
             serialPort = new SerialPort(PortNumber, Baud);
+            serialPort.DataReceived += (s,e) => Message = ReceiveData((s as SerialPort).ReadBufferSize);
         }
 
         #endregion
