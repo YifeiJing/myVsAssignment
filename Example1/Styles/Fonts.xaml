@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Example1">
+    <FontFamily x:Key="Lato-regular">pack://application:,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="Lato-BlackItalic">pack://application:,,,/Fonts/#Lato BlackItalic</FontFamily>
+    <FontFamily x:Key="Lato-Hairline">pack://application:,,,/Fonts/#Lato Hairline</FontFamily>
+    <FontFamily x:Key="Lato-Heavy">pack://application:,,,/Fonts/#Lato Heavy</FontFamily>
+    <FontFamily x:Key="Lato-Semibold">pack://application:,,,/Fonts/#Lato Semibold</FontFamily>
+    <FontFamily x:Key="Lato-Italic">pack://application:,,,/Fonts/#Lato Italic</FontFamily>
+
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="FontFamily" Value="{StaticResource Lato-regular}"/>
+    </Style>
+    
+</ResourceDictionary>
