@@ -19,6 +19,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <!--The header-->
                             <Border Background="{StaticResource BackGroundVeryLightBrush}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -30,7 +31,7 @@
                                         <Image Source="images/logo/logo_laugh_regular.png"/>
                                     </Button>
                                     <Viewbox Grid.Column="1" Grid.ColumnSpan="3" Margin="3">
-                                        <TextBlock FontFamily="{StaticResource Lato-Italic}" FontSize="{StaticResource LargeFontSize}" Margin="-25 0 0 0">
+                                        <TextBlock FontFamily="{StaticResource Lato-Italic}" FontSize="{StaticResource LargeFontSize}" Margin="-25 0 0 0" HorizontalAlignment="Center">
                                             <Run Text="I" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="r" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="s" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="i" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="g" Foreground="{StaticResource WordBlueBrush}"/>
                                         </TextBlock>
                                     </Viewbox>
@@ -41,19 +42,47 @@
                                     </StackPanel>
                                 </Grid>
                             </Border>
+                            <!--The drop down shadow-->
+                            <Border Grid.Row="1" BorderThickness="{Binding MarginSizeThickness}">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 0">
+                                        <GradientStop Color="{StaticResource ForeGroundLight}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource ForeGroundDark}" Offset="0.5"/>
+                                        <GradientStop Color="{StaticResource ForeGroundLight}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+                                <Border.OpacityMask>
+                                    <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
+                                        <GradientStop Color="{StaticResource ForeGroundDark}" Offset="0"/>
+                                        <GradientStop Color="{StaticResource BackGroundVeryLight}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.OpacityMask>
+                            </Border>
+                            <!--Page content-->
+                            <Border Grid.Row="2" Padding="{Binding InnerContentPaddiing}">
+                                <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            </Border>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Resources>
+
+
+    <!--Move and resize border control-->
     <WindowChrome.WindowChrome>
         <WindowChrome
+            ResizeBorderThickness="0"
             CaptionHeight="{Binding HeaderHeight}"
             GlassFrameThickness="0"
             CornerRadius="0"
             />
     </WindowChrome.WindowChrome>
-    <Grid>
-    </Grid>
+
+    <Border Background="{StaticResource SkyBlueBrush}">
+        <Grid>
+            
+        </Grid>
+    </Border>
 </Window>

@@ -21,7 +21,13 @@ namespace Example1
         /// <summary>
         /// The margin between the header and content of the window
         /// </summary>
-        public int MarginSize { get; } = 6;
+        public int MarginSize { get; } = 2;
+        public Thickness MarginSizeThickness { get { return new Thickness(MarginSize); } }
+
+        /// <summary>
+        /// Initialize the inner content padding
+        /// </summary>
+        public Thickness InnerContentPadding { get { return new Thickness(0); } }
 
         #endregion
 
