@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Example1
 {
@@ -10,6 +11,7 @@ namespace Example1
         public DeveloperPage()
         {
             InitializeComponent();
+            this.DataContext = Application.Current.MainWindow.DataContext;
         }
     }
 }

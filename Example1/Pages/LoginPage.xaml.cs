@@ -1,4 +1,5 @@
 ﻿
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Example1
@@ -11,12 +12,9 @@ namespace Example1
         public LoginPage()
         {
             InitializeComponent();
+            this.DataContext = Application.Current.MainWindow.DataContext;
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.AnimatOut();
-            
-        }
+        
     }
 }

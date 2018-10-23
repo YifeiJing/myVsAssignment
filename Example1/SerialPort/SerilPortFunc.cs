@@ -30,6 +30,10 @@ namespace Example1
         /// </summary>
         public string Message { get; set; }
 
+        /// <summary>
+        /// The bool value indicates the condition of the port
+        /// </summary>
+        public bool IsOpen { get { return serialPort.IsOpen; } }
         #endregion
 
         #region Constructor
@@ -62,7 +66,19 @@ namespace Example1
         /// <param name="m"></param>
         public void SendData(string m)
         {
-            serialPort.Write(m);
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write(m);
+            }
+            else
+            {
+                try
+                {
+                    serialPort.Open();
+                    serialPort.Write(m);
+                }
+                catch { }
+            }
         }
 
         /// <summary>

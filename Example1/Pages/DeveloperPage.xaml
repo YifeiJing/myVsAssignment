@@ -32,9 +32,9 @@
                     </StackPanel>
                 
                     </Border>
-                    <Button Content="Apply" Style="{StaticResource DeveloperButton}"/>
-                    <Button Content="Reset" Style="{StaticResource DeveloperButton}"/>
-                    <Button Content="Help" Style="{StaticResource DeveloperButton}"/>
+                    <Button Content="{StaticResource kApply}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Content="{StaticResource kReset}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
                 </StackPanel>
                 <Border Grid.Column="1" BorderThickness="1" Margin="30">
                     <Border.BorderBrush>
@@ -48,21 +48,21 @@
                 <StackPanel Grid.Column="2">
                     <Border x:Name="textborder" CornerRadius="10" BorderBrush="{StaticResource ForeGroundMainBrush}" BorderThickness="1">
                         
-                        <RichTextBox Margin="10" IsReadOnly="True" Height="300" Background="{StaticResource BackGroundVeryLightBrush}" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"/>
+                        <TextBox Text="{Binding DisplayMessage}" Margin="10" IsReadOnly="True" Height="300" Background="{StaticResource BackGroundVeryLightBrush}" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"/>
 
                     </Border>
                     <StatusBar Margin="10" Background="{StaticResource BackGroundVeryLightBrush}">
                         <StatusBarItem>
-                            <TextBlock Text="Status:" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
+                            <TextBlock Text="{StaticResource kStatus}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
                         <StatusBarItem>
-                            <TextBlock Text="" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
+                            <TextBlock Text="{Binding ReceMessage}"  FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
                     </StatusBar>
 
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource DeveloperTextbox}" Width="280"/>
-                        <Button Content="Send" Margin="0" Padding="10 3 10 3" Style="{StaticResource DeveloperButton}"/>
+                        <Button Content="{StaticResource kSend}" Margin="0" Padding="10 3 10 3" Style="{StaticResource DeveloperButton}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

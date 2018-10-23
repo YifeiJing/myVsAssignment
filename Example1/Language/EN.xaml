@@ -7,6 +7,12 @@
     <system:String x:Key="kHavefun">It's all about to have fun!</system:String>
     <system:String x:Key="kIdentification">Verify your identfication with card</system:String>
     <system:String x:Key="kNocard">Don't have a card?</system:String>
-    
-    
+    <system:String x:Key="kLanguage">切换简体中文</system:String>
+    <system:String x:Key="kApply">Apply</system:String>
+    <system:String x:Key="kReset">Reset</system:String>
+    <system:String x:Key="kHelp">Help</system:String>
+    <system:String x:Key="kSend">Send</system:String>
+    <system:String x:Key="kStatus">Status</system:String>
+
+
 </ResourceDictionary>
