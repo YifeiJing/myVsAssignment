@@ -11,6 +11,7 @@ namespace Example1
             switch((PageTypes)value)
             {
                 case PageTypes.LoginPage: return new LoginPage();
+                case PageTypes.DeveloperPage: return new DeveloperPage();
                 default: Debugger.Break();
                     return null;
             }

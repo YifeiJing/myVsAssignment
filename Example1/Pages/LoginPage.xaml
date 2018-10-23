@@ -1,4 +1,4 @@
-﻿<Page x:Class="Example1.LoginPage"
+﻿<local:BasePage x:Class="Example1.LoginPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,10 +25,10 @@
                            FontFamily="{StaticResource Lato-Hairline}"
                            Foreground="{StaticResource ForeGroundDarkBrush}"
                            TextAlignment="Center"/>
-                <Button Margin="0 60 0 30" Padding="0 20 0 20" Content="{DynamicResource kIdentification}"/>
+                <Button Margin="0 60 0 30" Click="Button_Click" Padding="0 20 0 20" Content="{DynamicResource kIdentification}"/>
             </StackPanel>
             
         </Border>
         <Button Content="{DynamicResource kNocard}" Style="{StaticResource TextButton}"/>
     </StackPanel>
-</Page>
+</local:BasePage>
