@@ -29,6 +29,11 @@ namespace Example1
         /// </summary>
         public Thickness InnerContentPadding { get { return new Thickness(0); } }
 
+        /// <summary>
+        /// The current page
+        /// </summary>
+        public PageTypes CurrentPage { set; get; } = PageTypes.LoginPage;
+
         #endregion
 
         #region Commands

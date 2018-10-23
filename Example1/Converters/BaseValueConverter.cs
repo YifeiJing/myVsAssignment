@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace FassetoFake
+namespace Example1
 {
     public abstract class BaseValueConverter<T> : MarkupExtension, IValueConverter
         where T: class, new()

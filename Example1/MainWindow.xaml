@@ -80,9 +80,10 @@
             />
     </WindowChrome.WindowChrome>
 
+    <!--The content of the main window-->
     <Border Background="{StaticResource SkyBlueBrush}">
         <Grid>
-            
+            <Frame Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
         </Grid>
     </Border>
 </Window>
