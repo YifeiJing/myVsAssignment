@@ -176,6 +176,12 @@
   <ItemGroup>
     <Resource Include="images\logo\logo_laugh.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\background\hoshi.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\background\emoji-background.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.2.9\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.9\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -83,6 +83,12 @@
     <!--The content of the main window-->
     <Border Background="{StaticResource SkyBlueBrush}">
         <Grid>
+            <!--<Grid.Background>
+                <ImageBrush ImageSource="images/background/hoshi.jpg"/>
+            </Grid.Background>-->
+            <Grid.Background>
+                <ImageBrush TileMode="Tile" ImageSource="images/background/emoji-background.png" ViewportUnits="Absolute" Viewport="0 0 500 500"/>
+            </Grid.Background>
             <Frame Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
         </Grid>
     </Border>
