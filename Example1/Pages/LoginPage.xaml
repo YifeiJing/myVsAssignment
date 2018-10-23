@@ -15,20 +15,20 @@
                 Padding="30 50 30 0"
                 Background="{StaticResource BackGroundVeryLightBrush}">
             <StackPanel>
-                <TextBlock Text="Sign Up"
+                <TextBlock Text="{DynamicResource kLogin}"
                            FontSize="{StaticResource LargeFontSize}"
                            FontFamily="{StaticResource Lato-regular}"
                            Foreground="{StaticResource WordBlueBrush}"
                            TextAlignment="Center"/>
-                <TextBlock Text="It's about to have fun!"
+                <TextBlock Text="{DynamicResource kHavefun}"
                            FontSize="{StaticResource NarmalFontSize}"
                            FontFamily="{StaticResource Lato-Hairline}"
                            Foreground="{StaticResource ForeGroundDarkBrush}"
                            TextAlignment="Center"/>
-                <Button Margin="0 60 0 30" Padding="0 20 0 20" Content="Verify your identfication with card"/>
+                <Button Margin="0 60 0 30" Padding="0 20 0 20" Content="{DynamicResource kIdentification}"/>
             </StackPanel>
             
         </Border>
-        <Button Content="Don't have a card?" Style="{StaticResource TextButton}"/>
+        <Button Content="{DynamicResource kNocard}" Style="{StaticResource TextButton}"/>
     </StackPanel>
 </Page>
