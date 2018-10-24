@@ -7,7 +7,10 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
       Title="DeveloperPage">
-    
+    <local:BasePage.Resources>
+
+    </local:BasePage.Resources>
+
 
     <StackPanel Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
         <Border x:Name="OperatPanel" Width="700" Background="{StaticResource BackGroundVeryLightBrush}" CornerRadius="10">
@@ -19,22 +22,20 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel>
                     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="10">
-                    <StackPanel>
-                        <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                        <TextBox Style="{StaticResource DeveloperTextbox}" />
-                        <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                        <TextBox Style="{StaticResource DeveloperTextbox}" />
-                        <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                        <TextBox Style="{StaticResource DeveloperTextbox}" />
-                        <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                        <TextBox Style="{StaticResource DeveloperTextbox}" />
+                        <StackPanel>
+                            <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
+                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                            <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
+                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                            <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
+                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                        </StackPanel>
 
-                    </StackPanel>
-                
                     </Border>
-                    <Button Content="{StaticResource kApply}" Style="{StaticResource DeveloperButton}"/>
-                    <Button Content="{StaticResource kReset}" Style="{StaticResource DeveloperButton}"/>
-                    <Button Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Content="{StaticResource kApply}" Style="{StaticResource DeveloperButton}" Command="{Binding PortOpenCommand}"/>
+                    <Button Command="{Binding PortCloseCommand}" Content="{StaticResource kReset}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Command="{Binding ClearDisplayMessageCommand}" Content="{StaticResource kClear}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Command="{Binding ChangeToLoginCommand}" Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
                 </StackPanel>
                 <Border Grid.Column="1" BorderThickness="1" Margin="30">
                     <Border.BorderBrush>
@@ -47,7 +48,7 @@
                 </Border>
                 <StackPanel Grid.Column="2">
                     <Border x:Name="textborder" CornerRadius="10" BorderBrush="{StaticResource ForeGroundMainBrush}" BorderThickness="1">
-                        
+
                         <TextBox Text="{Binding DisplayMessage}" Margin="10" IsReadOnly="True" Height="300" Background="{StaticResource BackGroundVeryLightBrush}" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"/>
 
                     </Border>
@@ -59,10 +60,18 @@
                             <TextBlock Text="{Binding ReceMessage}"  FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
                     </StatusBar>
+                    <StatusBar Margin="10" Background="{StaticResource BackGroundVeryLightBrush}">
+                        <StatusBarItem>
+                            <TextBlock Text="{StaticResource kPortStatus}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
+                        </StatusBarItem>
+                        <StatusBarItem>
+                            <TextBox x:Name="statusTextbox" Text="{Binding IsPortOpen, Converter={local:PortStatusValueConverter}}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}" Foreground="{Binding Text, ElementName=statusTextbox, Converter={local:PortStatusToForegroundColor}}" Style="{DynamicResource TextBoxStyle1}"/>
+                        </StatusBarItem>
+                    </StatusBar>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Style="{StaticResource DeveloperTextbox}" Width="280"/>
-                        <Button Content="{StaticResource kSend}" Margin="0" Padding="10 3 10 3" Style="{StaticResource DeveloperButton}"/>
+                        <TextBox Text="{Binding Message}" Style="{StaticResource DeveloperTextbox}" Width="280"/>
+                        <Button Content="{StaticResource kSend}" Margin="0" Padding="10 3 10 3" Command="{Binding SendDataCommand}" Style="{StaticResource DeveloperButton}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

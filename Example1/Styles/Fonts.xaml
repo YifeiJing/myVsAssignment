@@ -17,4 +17,5 @@
     <system:Double x:Key="SmallFontSize">14</system:Double>
     <system:Double x:Key="NarmalFontSize">20</system:Double>
     <system:Double x:Key="LargeFontSize">26</system:Double>
+    <system:Double x:Key="HugeFontSize">40</system:Double>
 </ResourceDictionary>

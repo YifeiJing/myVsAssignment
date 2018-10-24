@@ -20,6 +20,11 @@ namespace Example1
                 this.Visibility = Visibility.Collapsed;
 
             this.Loaded += BasePage_Loaded;
+            this.Unloaded += BasePage_Unloaded;
+        }
+
+        private void BasePage_Unloaded(object sender, RoutedEventArgs e)
+        {
         }
 
         private async void BasePage_Loaded(object sender, System.Windows.RoutedEventArgs e)

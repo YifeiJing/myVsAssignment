@@ -72,6 +72,10 @@
     <Compile Include="Animations\StoryboardHelpers.cs" />
     <Compile Include="Converters\BaseValueConverter.cs" />
     <Compile Include="Converters\PageValueConverter.cs" />
+    <Compile Include="Converters\PortStatusToForegroundColor.cs" />
+    <Compile Include="Converters\PortStatusValueConverter.cs" />
+    <Compile Include="Converters\StatusValueConverter.cs" />
+    <Compile Include="Converters\TimeValueConverter.cs" />
     <Compile Include="DataModel\SerialDataModel.cs" />
     <Compile Include="Pages\base\BasePage.cs" />
     <Compile Include="Pages\base\PageTypes.cs" />

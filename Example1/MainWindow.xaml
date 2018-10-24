@@ -9,7 +9,7 @@
         Title="Interesting" Height="450" Width="800">
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
-            <!--<Setter Property="WindowState" Value="Maximized"/>-->
+            <Setter Property="WindowState" Value="Maximized"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -96,7 +96,7 @@
             <Grid.Background>
                 <ImageBrush TileMode="Tile" ImageSource="images/background/emoji-background.png" ViewportUnits="Absolute" Viewport="0 0 500 500"/>
             </Grid.Background>
-            <Frame Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
+            <Frame NavigationUIVisibility="Hidden" JournalOwnership="UsesParentJournal" Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
         </Grid>
     </Border>
 </Window>

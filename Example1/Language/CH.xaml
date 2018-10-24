@@ -10,8 +10,15 @@
     <system:String x:Key="kLanguage">Englishi Version</system:String>
     <system:String x:Key="kApply">启动</system:String>
     <system:String x:Key="kReset">重置</system:String>
+    <system:String x:Key="kClear">清空</system:String>
     <system:String x:Key="kHelp">帮助</system:String>
     <system:String x:Key="kSend">发送</system:String>
-    <system:String x:Key="kStatus">状态</system:String>
-    
+    <system:String x:Key="kStatus">状态:</system:String>
+    <system:String x:Key="kStart">开始</system:String>
+    <system:String x:Key="kWorking">工作中</system:String>
+    <system:String x:Key="kPortStatus">端口状态:</system:String>
+    <system:String x:Key="kPortOn">开启</system:String>
+    <system:String x:Key="kPortOff">关闭</system:String>
+
+
 </ResourceDictionary>

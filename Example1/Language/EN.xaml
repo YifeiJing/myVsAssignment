@@ -10,9 +10,14 @@
     <system:String x:Key="kLanguage">切换简体中文</system:String>
     <system:String x:Key="kApply">Apply</system:String>
     <system:String x:Key="kReset">Reset</system:String>
+    <system:String x:Key="kClear">Clear</system:String>
     <system:String x:Key="kHelp">Help</system:String>
     <system:String x:Key="kSend">Send</system:String>
-    <system:String x:Key="kStatus">Status</system:String>
-
+    <system:String x:Key="kStatus">Status:</system:String>
+    <system:String x:Key="kStart">Start</system:String>
+    <system:String x:Key="kWorking">Working</system:String>
+    <system:String x:Key="kPortStatus">Port status:</system:String>
+    <system:String x:Key="kPortOn">On</system:String>
+    <system:String x:Key="kPortOff">Off</system:String>
 
 </ResourceDictionary>

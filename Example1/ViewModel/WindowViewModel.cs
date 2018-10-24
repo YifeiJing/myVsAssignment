@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.IO.Ports;
 using System;
+using System.Threading.Tasks;
 
 namespace Example1
 {
@@ -70,6 +71,57 @@ namespace Example1
         /// </summary>
         public string DisplayMessage { set; get; } = string.Empty;
 
+        /// <summary>
+        /// Indicates whether the ticker is count in increment mode or decrement mode
+        /// </summary>
+        public bool IsDecrement { get; set; } = false;
+
+        /// <summary>
+        /// Indicates whether the game is on
+        /// </summary>
+        public bool IsPlaying { get; set; } = false;
+
+        /// <summary>
+        /// The varible to count every second since the game begins
+        /// </summary>
+        public int Ticker { get; set; } = 0;
+
+        /// <summary>
+        /// Indicates whether the port is open
+        /// </summary>
+        public bool IsPortOpen { get; set; } = false;
+
+        /// <summary>
+        /// The method to change the value of the ticker every second.
+        /// </summary>
+        public void TimeTicker()
+        {
+            if(!IsDecrement)
+            {
+                Task.Run(async () =>
+                {
+                    do
+                    {
+                        await Task.Delay(200);
+                        ++Ticker;
+                    } while (IsPlaying);
+                });
+            }
+            else
+            {
+                Task.Run(async () =>
+                {
+                    do
+                    {
+                        await Task.Delay(200);
+                        --Ticker;
+                        if (Ticker == 0)
+                            IsPlaying = false;
+                    } while (IsPlaying);
+                });
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -100,9 +152,44 @@ namespace Example1
         public ICommand ChangeToDeveloperCommand { set; get; }
 
         /// <summary>
+        /// The command which change the current window to Login Window
+        /// </summary>
+        public ICommand ChangeToLoginCommand { set; get; }
+
+        /// <summary>
+        /// The command which change the current window to Login Window
+        /// </summary>
+        public ICommand ChangeToGameCommand { set; get; }
+
+        /// <summary>
         /// The command which change the current language
         /// </summary>
         public ICommand ChangeLanguageCommand { set; get; }
+
+        /// <summary>
+        /// The command to start the game
+        /// </summary>
+        public ICommand GameStartCommand { set; get; }
+
+        /// <summary>
+        /// The command to start the game
+        /// </summary>
+        public ICommand GameEndCommand { set; get; }
+
+        /// <summary>
+        /// The command to open the port
+        /// </summary>
+        public ICommand PortOpenCommand { set; get; }
+
+        /// <summary>
+        /// The command to close the port
+        /// </summary>
+        public ICommand PortCloseCommand { set; get; }
+
+        /// <summary>
+        /// The command to clear the content text in the developer window
+        /// </summary>
+        public ICommand DisplayMessageClearCommand { get; set; }
 
         #endregion
         #region Constructor
@@ -113,6 +200,12 @@ namespace Example1
             MinimizeCommand = new RelayCommand(() => Application.Current.MainWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => Application.Current.MainWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
+
+            #region Page Load command implement
+
+            ///
+            ///Change the CurrentPage to what the user want
+            ///
             ChangeToDeveloperCommand = new RelayCommand(() =>
             {
                 if (this.CurrentPage == PageTypes.DeveloperPage)
@@ -121,18 +214,87 @@ namespace Example1
                 }
                 else
                 {
-
                     this.CurrentPage = PageTypes.DeveloperPage;
                 }
 
             });
+
+            ChangeToLoginCommand = new RelayCommand(() =>
+            {
+                if (this.CurrentPage == PageTypes.LoginPage)
+                {
+                    return;
+                }
+                else
+                {
+
+                    this.CurrentPage = PageTypes.LoginPage;
+                }
+
+            });
+
+            ChangeToGameCommand = new RelayCommand( () =>
+            {
+                if (this.CurrentPage == PageTypes.GamePage)
+                {
+                    return;
+                }
+                else
+                {
+                    this.CurrentPage = PageTypes.GamePage;
+                }
+
+            });
+
+            #endregion
+
+            #region Serial port Datareceived Event handler
+            ///
+            //Deal with the coming data and send it to <para ReceMessage>
+            //<para DisplayMessage> show the accumulate message
+            ///
             sp.DataReceived += (s, e) =>
             {
-                ReceMessage = ReceiveData((s as SerialPort).ReadBufferSize);
+                ReceMessage = ReceiveData((s as SerialPort).BytesToRead);
                 DisplayMessage += ReceMessage;
             };
+
+            #endregion
+
+            //Change current language
             ChangeLanguageCommand = new RelayCommand(ChangeLanguage);
+
+            #region Game panel commands
+            GameStartCommand = new RelayCommand(GameStart);
+            GameEndCommand = new RelayCommand(GameEnd);
+
+            #endregion
+
+            #region Developer panel commands
+
+            PortOpenCommand = new RelayCommand(() =>
+            {
+                try
+                { sp.Open();
+                    IsPortOpen = true;
+                }
+                catch
+                { }
+                });
+            PortCloseCommand = new RelayCommand(() => {
+                try
+                { sp.Close();
+                    IsPortOpen = false;
+                }
+                catch
+                { }
+            });
+            DisplayMessageClearCommand = new RelayCommand(() => DisplayMessage = string.Empty);
+            SendDataCommand = new RelayCommand(() => SendData());
+
+            #endregion
         }
+
         #endregion
 
         #region Private helpers
@@ -192,6 +354,26 @@ namespace Example1
 
             Application.Current.Resources.MergedDictionaries[0] = dict;
         }
+
+        /// <summary>
+        /// The the user press the start game button
+        /// The command runs this method
+        /// </summary>
+        private void GameStart()
+        {
+            Ticker = 0;
+            IsPlaying = true;
+            TimeTicker();
+        }
+
+        /// <summary>
+        /// The game end command method
+        /// </summary>
+        private void GameEnd()
+        {
+            IsPlaying = false;
+        }
+
         #endregion
     }
 }

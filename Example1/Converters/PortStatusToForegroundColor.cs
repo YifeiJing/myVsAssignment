@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
+using System.Windows.Media;
 
 namespace Example1
 {
-    class PageValueConverter : BaseValueConverter<PageValueConverter>
+    class PortStatusToForegroundColor : BaseValueConverter<PortStatusToForegroundColor>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch((PageTypes)value)
+            string portstatus = (string)value;
+            if(portstatus == "On")
             {
-                case PageTypes.LoginPage: return new LoginPage();
-                case PageTypes.GamePage: return new GamePage();
-                case PageTypes.DeveloperPage: return new DeveloperPage();
-                default: Debugger.Break();
-                    return null;
+                return new SolidColorBrush(Color.FromRgb(0x00, 0xc5, 0x41));
+            }
+            else
+            {
+                return new SolidColorBrush(Color.FromRgb(0xff, 0x47, 0x47));
             }
         }
 

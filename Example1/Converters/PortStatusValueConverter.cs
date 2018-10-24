@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Example1
 {
-    class PageValueConverter : BaseValueConverter<PageValueConverter>
+    class PortStatusValueConverter : BaseValueConverter<PortStatusValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch((PageTypes)value)
+            bool portstatus = (bool)value;
+            if(portstatus)
             {
-                case PageTypes.LoginPage: return new LoginPage();
-                case PageTypes.GamePage: return new GamePage();
-                case PageTypes.DeveloperPage: return new DeveloperPage();
-                default: Debugger.Break();
-                    return null;
+                return string.Format("On");
+            }
+            else
+            {
+                return string.Format("Off");
             }
         }
 
