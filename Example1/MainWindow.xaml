@@ -96,7 +96,7 @@
             <Grid.Background>
                 <ImageBrush TileMode="Tile" ImageSource="images/background/emoji-background.png" ViewportUnits="Absolute" Viewport="0 0 500 500"/>
             </Grid.Background>
-            <Frame NavigationUIVisibility="Hidden" JournalOwnership="UsesParentJournal" Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
+            <Frame x:Name="frame" NavigationUIVisibility="Hidden" JournalOwnership="UsesParentJournal" Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
         </Grid>
     </Border>
 </Window>

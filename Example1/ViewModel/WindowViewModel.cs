@@ -3,6 +3,7 @@ using System.Windows.Input;
 using System.IO.Ports;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Example1
 {
@@ -206,7 +207,7 @@ namespace Example1
             ///
             ///Change the CurrentPage to what the user want
             ///
-            ChangeToDeveloperCommand = new RelayCommand(() =>
+            ChangeToDeveloperCommand = new RelayCommand(async () =>
             {
                 if (this.CurrentPage == PageTypes.DeveloperPage)
                 {
@@ -214,12 +215,15 @@ namespace Example1
                 }
                 else
                 {
+                    var mFrame = Application.Current.MainWindow.FindName("frame");
+                    BasePage page = (mFrame as Frame).Content as BasePage;
+                    await page.AnimatOut();
                     this.CurrentPage = PageTypes.DeveloperPage;
                 }
 
             });
 
-            ChangeToLoginCommand = new RelayCommand(() =>
+            ChangeToLoginCommand = new RelayCommand(async() =>
             {
                 if (this.CurrentPage == PageTypes.LoginPage)
                 {
@@ -227,13 +231,15 @@ namespace Example1
                 }
                 else
                 {
-
+                    var mFrame = Application.Current.MainWindow.FindName("frame");
+                    BasePage page = (mFrame as Frame).Content as BasePage;
+                    await page.AnimatOut();
                     this.CurrentPage = PageTypes.LoginPage;
                 }
 
             });
 
-            ChangeToGameCommand = new RelayCommand( () =>
+            ChangeToGameCommand = new RelayCommand( async() =>
             {
                 if (this.CurrentPage == PageTypes.GamePage)
                 {
@@ -241,6 +247,9 @@ namespace Example1
                 }
                 else
                 {
+                    var mFrame = Application.Current.MainWindow.FindName("frame");
+                    BasePage page = (mFrame as Frame).Content as BasePage;
+                    await page.AnimatOut();
                     this.CurrentPage = PageTypes.GamePage;
                 }
 

@@ -64,7 +64,7 @@
                         <StatusBarItem>
                             <TextBlock Text="{StaticResource kPortStatus}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
-                        <StatusBarItem>
+                        <StatusBarItem Margin="10 0 0 0">
                             <TextBox x:Name="statusTextbox" Text="{Binding IsPortOpen, Converter={local:PortStatusValueConverter}}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}" Foreground="{Binding Text, ElementName=statusTextbox, Converter={local:PortStatusToForegroundColor}}" Style="{DynamicResource TextBoxStyle1}"/>
                         </StatusBarItem>
                     </StatusBar>
