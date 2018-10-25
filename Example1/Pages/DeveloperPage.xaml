@@ -24,7 +24,7 @@
                     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="10">
                         <StackPanel>
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                            <TextBox Text="{Binding MessageVar1}" Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
                             <TextBox Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
@@ -57,7 +57,7 @@
                             <TextBlock Text="{StaticResource kStatus}" FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
                         <StatusBarItem>
-                            <TextBlock Text="{Binding ReceMessage}"  FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
+                            <TextBlock Text="{Binding ReceMessage, Converter={local:ReceMessageValueConverter}}"  FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource NarmalFontSize}"/>
                         </StatusBarItem>
                     </StatusBar>
                     <StatusBar Margin="10" Background="{StaticResource BackGroundVeryLightBrush}">

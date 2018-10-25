@@ -93,6 +93,31 @@ namespace Example1
         public bool IsPortOpen { get; set; } = false;
 
         /// <summary>
+        /// If the player is ot of the sensor range
+        /// </summary>
+        public bool IsOutOfRange { get; set; } = false;
+
+        /// <summary>
+        /// Indicates whether the game is end
+        /// </summary>
+        public bool IsGameEnd { get; set; } = false;
+
+        /// <summary>
+        /// If the machine is verifying the card
+        /// </summary>
+        public bool IsVerifying { get; set; } = false;
+
+        /// <summary>
+        /// holds the value of the ticker in pause screen
+        /// </summary>
+        public int OutOfRangeTick { get; set; } = 50;
+
+        /// <summary>
+        /// The score of the current player
+        /// </summary>
+        public int PlayerScore { get; set; } = 0;
+
+        /// <summary>
         /// The method to change the value of the ticker every second.
         /// </summary>
         public void TimeTicker()
@@ -122,6 +147,11 @@ namespace Example1
                 });
             }
         }
+
+        /// <summary>
+        /// The message of var1 in debug panel
+        /// </summary>
+        public string CommandVar1 { set; get; } = string.Empty;
 
         #endregion
 
@@ -261,11 +291,84 @@ namespace Example1
             ///
             //Deal with the coming data and send it to <para ReceMessage>
             //<para DisplayMessage> show the accumulate message
+            //Take charge of the current message from the port
+            //Go to different pages
             ///
-            sp.DataReceived += (s, e) =>
+            sp.DataReceived += async (s, e) =>
             {
                 ReceMessage = ReceiveData((s as SerialPort).BytesToRead);
                 DisplayMessage += ReceMessage;
+
+                if(ReceMessage == LoginCommands.Login)
+                {
+                    if (this.CurrentPage == PageTypes.GamePage)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        var mFrame = Application.Current.MainWindow.FindName("frame");
+                        BasePage page = (mFrame as Frame).Content as BasePage;
+                        await page.AnimatOut();
+                        this.CurrentPage = PageTypes.GamePage;
+                    }
+                }
+                else if(ReceMessage == LoginCommands.IDVerify)
+                {
+                    IsVerifying = true;
+                }
+                else if(ReceMessage == LoginCommands.Root)
+                {
+                    if (this.CurrentPage == PageTypes.DeveloperPage)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        var mFrame = Application.Current.MainWindow.FindName("frame");
+                        BasePage page = (mFrame as Frame).Content as BasePage;
+                        await page.AnimatOut();
+                        this.CurrentPage = PageTypes.DeveloperPage;
+                    }
+                }
+                else if(ReceMessage == GameComands.Back || ReceMessage == DebugCommands.Back)
+                {
+                    if (this.CurrentPage == PageTypes.LoginPage)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        var mFrame = Application.Current.MainWindow.FindName("frame");
+                        BasePage page = (mFrame as Frame).Content as BasePage;
+                        await page.AnimatOut();
+                        this.CurrentPage = PageTypes.LoginPage;
+                    }
+                }
+                else if(ReceMessage == GameComands.GameStart)
+                {
+                    GameStart();
+                }
+                else if(ReceMessage == GameComands.GameEnd)
+                {
+                    GameEnd();
+                }
+                else if(ReceMessage == GameComands.GamePause)
+                {
+                    GamePause();
+                }
+                else if(ReceMessage == GameComands.OutRange)
+                {
+                    OutOfRange();
+                }
+                else if(ReceMessage == GameComands.GetBack)
+                {
+                    GetBack();
+                }
+                else
+                {
+                    return;
+                }
             };
 
             #endregion
@@ -283,13 +386,35 @@ namespace Example1
 
             PortOpenCommand = new RelayCommand(() =>
             {
-                try
-                { sp.Open();
-                    IsPortOpen = true;
-                }
-                catch
+                if (sp.IsOpen)
                 { }
-                });
+                else
+                {
+                    try
+                    {
+                        sp.Open();
+                        IsPortOpen = true;
+                    }
+                    catch { }
+                }
+                if(CommandVar1 == "S")
+                {
+                    MoveServo();
+                }
+                else if(CommandVar1 == "R")
+                {
+                    ReadRGBSensor();
+                }
+                else if(CommandVar1 == "D")
+                {
+                    ReadDistanceSensor();
+                }
+                else
+                {
+                    return;
+                }
+            });
+
             PortCloseCommand = new RelayCommand(() => {
                 try
                 { sp.Close();
@@ -381,8 +506,117 @@ namespace Example1
         private void GameEnd()
         {
             IsPlaying = false;
+            IsGameEnd = true;
         }
 
+        /// <summary>
+        /// The game pause method
+        /// </summary>
+        private void GamePause()
+        {
+            IsPlaying = false;
+        }
+
+        /// <summary>
+        /// The game resume method
+        /// </summary>
+        private void GameResume()
+        {
+            IsPlaying = true;
+            TimeTicker();
+        }
+
+        /// <summary>
+        /// The method to run when the player out of the sensor range
+        /// </summary>
+        private void OutOfRange()
+        {
+            GamePause();
+            IsOutOfRange = true;
+        }
+
+        /// <summary>
+        /// When the player get back from outer place
+        /// </summary>
+        private void GetBack()
+        {
+            IsOutOfRange = false;
+            GameResume();
+            OutOfRangeTick = 50;
+        }
+
+        /// <summary>
+        /// Move servo in the debug mode
+        /// </summary>
+        private void MoveServo()
+        {
+            if (sp.IsOpen)
+            {
+                sp.Write(DebugCommands.MoveServo);
+            }
+            else
+                return;
+        }
+
+        /// <summary>
+        /// Read distance sensor
+        /// </summary>
+        private void ReadDistanceSensor()
+        {
+            if (sp.IsOpen)
+            {
+                sp.Write(DebugCommands.ReadDistanceSensor);
+            }
+            else
+                return;
+        }
+
+        /// <summary>
+        /// Read RGB sensor
+        /// </summary>
+        private void ReadRGBSensor()
+        {
+            if (sp.IsOpen)
+            {
+                sp.Write(DebugCommands.ReadRGBSensor);
+            }
+            else
+                return;
+        }
+
+        /// <summary>
+        /// Begin debug mode
+        /// </summary>
+        private void BeginDebug()
+        {
+            if (sp.IsOpen)
+            {
+                sp.Write(DebugCommands.Debug);
+            }
+            else
+                return;
+        }
+
+        /// <summary>
+        /// The ticker begin when the player get out of the sensor range
+        /// </summary>
+        private void OutOfRangeTicker()
+        {
+            Task.Run(async () =>
+            {
+                while (IsOutOfRange)
+                {
+                    await Task.Delay(200);
+                    OutOfRangeTick--;
+                    if (OutOfRangeTick < 0)
+                    {
+                        IsOutOfRange = false;
+                        IsGameEnd = true;
+                        break;
+                    }
+                }
+            });
+        }
         #endregion
     }
 }

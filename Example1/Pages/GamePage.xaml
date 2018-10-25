@@ -25,12 +25,17 @@
                         <Grid>
                             <Rectangle Width="500" Height="400" Fill="{StaticResource ForeGroundMainBrush}" RadiusX="10" RadiusY="10">
                             </Rectangle>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60" Foreground="Black" Text="{Binding Ticker, Converter={local:TimeValueConverter}}"/>
-                    
+                            <TextBlock Text="{Binding Ticker,Converter={local:TimeValueConverter}}" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
+                            <TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
+                            <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
+                                <StackPanel>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="You are out of Range!"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{Binding OutOfRangeTick, Converter={local:PauseTickerValueConverter}}"/>
+                                </StackPanel>
+                            </Border>
                         </Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Style="{StaticResource GameButton}" Content="{DynamicResource kStart}" Margin="20 20 20 20" Padding="0" Width="100" Height="60" IsEnabled="{Binding IsPlaying, Converter={local:StatusValueConverter}}" Command="{Binding GameStartCommand}"/>
-                            <Button Padding="20 0 20 0" Style="{DynamicResource MainButton}" Content="End" Command="{Binding GameEndCommand}"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>

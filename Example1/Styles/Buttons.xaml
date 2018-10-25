@@ -103,8 +103,8 @@
                         </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" TargetName="border" Value="{StaticResource ForeGroundDarkBrush}"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
                             <Setter Property="Foreground" Value="#FF838383"/>
+                            <Setter Property="Text" TargetName="contentPresenter" Value="{DynamicResource kVerifying}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

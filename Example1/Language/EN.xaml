@@ -19,5 +19,6 @@
     <system:String x:Key="kPortStatus">Port status:</system:String>
     <system:String x:Key="kPortOn">On</system:String>
     <system:String x:Key="kPortOff">Off</system:String>
+    <system:String x:Key="kVerifying">Verifying</system:String>
 
 </ResourceDictionary>

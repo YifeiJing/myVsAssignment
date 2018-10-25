@@ -19,6 +19,7 @@
     <system:String x:Key="kPortStatus">端口状态:</system:String>
     <system:String x:Key="kPortOn">开启</system:String>
     <system:String x:Key="kPortOff">关闭</system:String>
+    <system:String x:Key="kVerifying">认证中</system:String>
 
 
 </ResourceDictionary>
