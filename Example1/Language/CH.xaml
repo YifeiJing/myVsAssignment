@@ -20,6 +20,7 @@
     <system:String x:Key="kPortOn">开启</system:String>
     <system:String x:Key="kPortOff">关闭</system:String>
     <system:String x:Key="kVerifying">认证中</system:String>
+    <system:String x:Key="kOutOfRange">你不在距离范围内！</system:String>
 
 
 </ResourceDictionary>

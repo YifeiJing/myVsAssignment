@@ -20,5 +20,6 @@
     <system:String x:Key="kPortOn">On</system:String>
     <system:String x:Key="kPortOff">Off</system:String>
     <system:String x:Key="kVerifying">Verifying</system:String>
+    <system:String x:Key="kOutOfRange">You are out of Range!</system:String>
 
 </ResourceDictionary>

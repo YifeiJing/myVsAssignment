@@ -29,7 +29,7 @@
                             <TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
                             <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
                                 <StackPanel>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="You are out of Range!"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kOutOfRange}"/>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{Binding OutOfRangeTick, Converter={local:PauseTickerValueConverter}}"/>
                                 </StackPanel>
                             </Border>

@@ -21,6 +21,8 @@ namespace Example1
         /// </summary>
         private string _CurrentLang = "EN";
 
+        private AudioHelper mAudioHelper = new AudioHelper();
+
         #endregion
 
         #region Public members
@@ -222,6 +224,8 @@ namespace Example1
         /// </summary>
         public ICommand DisplayMessageClearCommand { get; set; }
 
+        public ICommand PlayAudioHelperCommand { get; set; }
+
         #endregion
         #region Constructor
 
@@ -237,6 +241,11 @@ namespace Example1
             ///
             ///Change the CurrentPage to what the user want
             ///
+            PlayAudioHelperCommand = new RelayCommand(() =>
+            {
+                AudioHelper.PleaseInsertCard();
+            });
+
             ChangeToDeveloperCommand = new RelayCommand(async () =>
             {
                 if (this.CurrentPage == PageTypes.DeveloperPage)
@@ -294,7 +303,7 @@ namespace Example1
             //Take charge of the current message from the port
             //Go to different pages
             ///
-            sp.DataReceived += async (s, e) =>
+            sp.DataReceived += (s, e) =>
             {
                 ReceMessage = ReceiveData((s as SerialPort).BytesToRead);
                 DisplayMessage += ReceMessage;
@@ -307,10 +316,13 @@ namespace Example1
                     }
                     else
                     {
-                        var mFrame = Application.Current.MainWindow.FindName("frame");
-                        BasePage page = (mFrame as Frame).Content as BasePage;
-                        await page.AnimatOut();
-                        this.CurrentPage = PageTypes.GamePage;
+                        Application.Current.Dispatcher.Invoke(async () =>
+                        {
+                            var mFrame = Application.Current.MainWindow.FindName("frame");
+                            BasePage page = (mFrame as Frame).Content as BasePage;
+                            await page.AnimatOut();
+                            this.CurrentPage = PageTypes.GamePage;
+                        }).Wait();
                     }
                 }
                 else if(ReceMessage == LoginCommands.IDVerify)
@@ -325,10 +337,13 @@ namespace Example1
                     }
                     else
                     {
-                        var mFrame = Application.Current.MainWindow.FindName("frame");
-                        BasePage page = (mFrame as Frame).Content as BasePage;
-                        await page.AnimatOut();
-                        this.CurrentPage = PageTypes.DeveloperPage;
+                        Application.Current.Dispatcher.Invoke(async () =>
+                        {
+                            var mFrame = Application.Current.MainWindow.FindName("frame");
+                            BasePage page = (mFrame as Frame).Content as BasePage;
+                            await page.AnimatOut();
+                            this.CurrentPage = PageTypes.DeveloperPage;
+                        }).Wait();
                     }
                 }
                 else if(ReceMessage == GameComands.Back || ReceMessage == DebugCommands.Back)
@@ -339,10 +354,13 @@ namespace Example1
                     }
                     else
                     {
-                        var mFrame = Application.Current.MainWindow.FindName("frame");
-                        BasePage page = (mFrame as Frame).Content as BasePage;
-                        await page.AnimatOut();
-                        this.CurrentPage = PageTypes.LoginPage;
+                        Application.Current.Dispatcher.Invoke(async () =>
+                        {
+                            var mFrame = Application.Current.MainWindow.FindName("frame");
+                            BasePage page = (mFrame as Frame).Content as BasePage;
+                            await page.AnimatOut();
+                            this.CurrentPage = PageTypes.LoginPage;
+                        }).Wait();
                     }
                 }
                 else if(ReceMessage == GameComands.GameStart)

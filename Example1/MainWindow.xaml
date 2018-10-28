@@ -30,9 +30,10 @@
                                     <Button Grid.Column="0" Padding="5" Style="{StaticResource SystemIconButton}">
                                         <Image Source="images/logo/logo_laugh_regular.png"/>
                                     </Button>
-                                    <Viewbox Grid.Column="1" Grid.ColumnSpan="3" Margin="3">
-                                        <TextBlock FontFamily="{StaticResource Lato-Italic}" FontSize="{StaticResource LargeFontSize}" Margin="-25 0 0 0" HorizontalAlignment="Center">
-                                            <Run Text="I" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="r" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="s" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="i" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="g" Foreground="{StaticResource WordBlueBrush}"/>
+                                    <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="3">
+                                        <TextBlock FontFamily="{StaticResource Lato-Semibold}" FontSize="{StaticResource LargeFontSize}" Margin="2" HorizontalAlignment="Center">
+                                            <Run Text="I" Foreground="{StaticResource WordOrangeBrush}"/><Run Text="N" Foreground="{StaticResource WordBlueBrush}"/><Run Text="T" Foreground="{StaticResource WordRedBrush}"/><Run Text="E" Foreground="{StaticResource WordGreenBrush}"/><Run Text="R" Foreground="{StaticResource WordOrangeBrush}"/><Run Text="E" Foreground="{StaticResource WordGreenBrush}"/><Run Text="S" Foreground="{StaticResource WordRedBrush}"/><Run Text="T" Foreground="{StaticResource WordBlueBrush}"/><Run Text="I" Foreground="{StaticResource WordOrangeBrush}"/><Run Text="N" Foreground="{StaticResource WordGreenBrush}"/><Run Text="G" Foreground="{StaticResource WordBlueBrush}"/>
+                                            <!--<Run Text="I" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="r" Foreground="{StaticResource WordBlueBrush}"/><Run Text="e" Foreground="{StaticResource WordBlueBrush}"/><Run Text="s" Foreground="{StaticResource WordBlueBrush}"/><Run Text="t" Foreground="{StaticResource WordBlueBrush}"/><Run Text="i" Foreground="{StaticResource WordBlueBrush}"/><Run Text="n" Foreground="{StaticResource WordBlueBrush}"/><Run Text="g" Foreground="{StaticResource WordBlueBrush}"/>-->
                                         </TextBlock>
                                     </Viewbox>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
@@ -96,6 +97,7 @@
             <Grid.Background>
                 <ImageBrush TileMode="Tile" ImageSource="images/background/emoji-background.png" ViewportUnits="Absolute" Viewport="0 0 500 500"/>
             </Grid.Background>
+            <MediaElement Visibility="Collapsed" x:Name="audiohelper" LoadedBehavior="Manual" UnloadedBehavior="Stop"/>
             <Frame x:Name="frame" NavigationUIVisibility="Hidden" JournalOwnership="UsesParentJournal" Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
         </Grid>
     </Border>

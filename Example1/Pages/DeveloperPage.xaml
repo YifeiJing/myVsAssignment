@@ -24,7 +24,7 @@
                     <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Padding="10">
                         <StackPanel>
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                            <TextBox Text="{Binding MessageVar1}" Style="{StaticResource DeveloperTextbox}" />
+                            <TextBox Text="{Binding CommandVar1}" Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
                             <TextBox Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
@@ -34,7 +34,7 @@
                     </Border>
                     <Button Content="{StaticResource kApply}" Style="{StaticResource DeveloperButton}" Command="{Binding PortOpenCommand}"/>
                     <Button Command="{Binding PortCloseCommand}" Content="{StaticResource kReset}" Style="{StaticResource DeveloperButton}"/>
-                    <Button Command="{Binding ClearDisplayMessageCommand}" Content="{StaticResource kClear}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Command="{Binding DisplayMessageClearCommand}" Content="{StaticResource kClear}" Style="{StaticResource DeveloperButton}"/>
                     <Button Command="{Binding ChangeToLoginCommand}" Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
                 </StackPanel>
                 <Border Grid.Column="1" BorderThickness="1" Margin="30">
