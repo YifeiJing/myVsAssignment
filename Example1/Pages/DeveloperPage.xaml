@@ -26,9 +26,9 @@
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
                             <TextBox Text="{Binding CommandVar1}" Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                            <TextBox Text="{Binding CommandVar2}" Style="{StaticResource DeveloperTextbox}" />
                             <TextBlock Text="Var1" Style="{StaticResource DeveloperText}"/>
-                            <TextBox Style="{StaticResource DeveloperTextbox}" />
+                            <TextBox Text="{Binding CommandVar3}" Style="{StaticResource DeveloperTextbox}" />
                         </StackPanel>
 
                     </Border>

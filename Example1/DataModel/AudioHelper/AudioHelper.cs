@@ -10,13 +10,15 @@ namespace Example1
 {
     public class AudioHelper 
     {
-        #region Public members
+        #region Private members
 
         static MediaElement Helper = null;
 
         static string OnVerifying { get; } = "Verifying.mp3";
 
         static string CurrentDirectory { set; get; }
+
+        static string mLang = "EN";
 
         #endregion
 
@@ -35,10 +37,30 @@ namespace Example1
 
         #region Public helpers
 
+        public static void ChangeLanguage()
+        {
+            if(mLang == "EN")
+            {
+                mLang = "ZH";
+            }
+            else
+            {
+                mLang = "EN";
+            }
+        }
+
         public static void PleaseInsertCard()
         {
-            var uri = CurrentDirectory + OnVerifying;
-            Helper.Source = new Uri(uri,UriKind.Absolute);
+            if (mLang == "EN")
+            {
+                var uri = CurrentDirectory + OnVerifying;
+                Helper.Source = new Uri(uri, UriKind.Absolute);
+            }
+            else if(mLang == "ZH")
+            {
+                var uri = CurrentDirectory + OnVerifying;
+                Helper.Source = new Uri(uri, UriKind.Absolute);
+            }
             while (!Helper.IsLoaded);
             Helper.Play();
         }

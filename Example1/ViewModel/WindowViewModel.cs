@@ -155,6 +155,16 @@ namespace Example1
         /// </summary>
         public string CommandVar1 { set; get; } = string.Empty;
 
+        /// <summary>
+        /// The message of var2 in debug panel
+        /// </summary>
+        public string CommandVar2 { set; get; } = string.Empty;
+
+        /// <summary>
+        /// The message of var3 in debug panel
+        /// </summary>
+        public string CommandVar3 { set; get; } = string.Empty;
+
         #endregion
 
         #region Commands
@@ -540,6 +550,9 @@ namespace Example1
         /// </summary>
         private void GameResume()
         {
+            if (IsPlaying)
+                return;
+
             IsPlaying = true;
             TimeTicker();
         }
@@ -549,6 +562,9 @@ namespace Example1
         /// </summary>
         private void OutOfRange()
         {
+            if (IsOutOfRange)
+                return;
+
             GamePause();
             IsOutOfRange = true;
         }
