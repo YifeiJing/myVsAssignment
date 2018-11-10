@@ -29,7 +29,7 @@
             </StackPanel>
             
         </Border>
-        <Button Margin="0 10 0 0" Content="{DynamicResource kNocard}" Style="{StaticResource TextButton}" Command="{Binding PlayAudioHelperCommand}"/>
+        <Button Margin="0 10 0 0" Content="{DynamicResource kNocard}" Style="{StaticResource TextButton}" Command="{Binding PortOpenCommand}"/>
         <Button Margin="0" Content="{DynamicResource kLanguage}" Style="{StaticResource TextButton}" Command="{Binding ChangeLanguageCommand}"/>
     </StackPanel>
 </local:BasePage>

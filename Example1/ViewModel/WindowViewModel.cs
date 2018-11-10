@@ -165,6 +165,11 @@ namespace Example1
         /// </summary>
         public string CommandVar3 { set; get; } = string.Empty;
 
+        /// <summary>
+        /// Holds the state of the side menu, whether it is visible
+        /// </summary>
+        public bool SideMenuVisible { get; set; } = false;
+
         #endregion
 
         #region Commands
@@ -234,9 +239,14 @@ namespace Example1
         /// </summary>
         public ICommand DisplayMessageClearCommand { get; set; }
 
+        /// <summary>
+        /// The command to player the audio helper
+        /// </summary>
         public ICommand PlayAudioHelperCommand { get; set; }
 
+
         #endregion
+
         #region Constructor
 
         public WindowViewModel()
@@ -258,6 +268,7 @@ namespace Example1
 
             ChangeToDeveloperCommand = new RelayCommand(async () =>
             {
+
                 if (this.CurrentPage == PageTypes.DeveloperPage)
                 {
                     return;
@@ -525,6 +536,7 @@ namespace Example1
         {
             Ticker = 0;
             IsPlaying = true;
+            IsOutOfRange = false;
             TimeTicker();
         }
 
@@ -566,6 +578,7 @@ namespace Example1
                 return;
 
             GamePause();
+            OutOfRangeTicker();
             IsOutOfRange = true;
         }
 
@@ -574,6 +587,8 @@ namespace Example1
         /// </summary>
         private void GetBack()
         {
+            if (!IsOutOfRange)
+                return;
             IsOutOfRange = false;
             GameResume();
             OutOfRangeTick = 50;
@@ -645,7 +660,9 @@ namespace Example1
                     if (OutOfRangeTick < 0)
                     {
                         IsOutOfRange = false;
+                        IsPlaying = false;
                         IsGameEnd = true;
+                        sp.Write("end__");
                         break;
                     }
                 }

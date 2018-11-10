@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Example1.SideMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Example1"
+             mc:Ignorable="d" 
+             Width="400"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Border Background="{StaticResource ForeGroundLightBrush}">
+                <!--Content-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--Top menu-->
+                    <Grid Height="50" Background="{StaticResource WordBlueBrush}">
+                        <Viewbox Margin="11">
+                            <TextBlock FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource NarmalFontSize}">
+                                <Run Text="L" Foreground="{StaticResource WordRedBrush}"/><Run Text="E" Foreground="Yellow"/><Run Text="G" Foreground="{StaticResource WordGreenBrush}"/><Run Text="E" Foreground="{StaticResource WordRedBrush}"/><Run Text="N" Foreground="{StaticResource WordOrangeBrush}"/><Run Text="D" Foreground="Violet"/><Run Text="L" Foreground="Yellow"/><Run Text="I" Foreground="{StaticResource WordRedBrush}"/><Run Text="S" Foreground="{StaticResource WordOrangeBrush}"/><Run Text="T" Foreground="Blue"/>
+                            </TextBlock>
+                        </Viewbox>
+                    </Grid>
+                    <ContentPresenter Grid.Row="1"/>
+                </Grid>
+            </Border>
+
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

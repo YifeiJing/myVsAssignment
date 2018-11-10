@@ -44,6 +44,9 @@
     <Reference Include="Microsoft.Windows.Shell, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.5.13.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.5.13\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
@@ -68,8 +71,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animations\AnimationType.cs" />
+    <Compile Include="Animations\ElementAnimations.cs" />
     <Compile Include="Animations\PageAnimations.cs" />
     <Compile Include="Animations\StoryboardHelpers.cs" />
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\UIElementAnimationAttachedProperty.cs" />
+    <Compile Include="Controls\ChatListControl.xaml.cs" />
+    <Compile Include="Controls\ChatListItemControl.xaml.cs" />
+    <Compile Include="Controls\SideMenuControl.xaml.cs" />
+    <Compile Include="Converters\StringToRGBValueConverter.cs" />
     <Compile Include="DataModel\AudioHelper\AudioHelper.cs" />
     <Compile Include="DataModel\ComunicationCommand\CommandType.cs" />
     <Compile Include="DataModel\ComunicationCommand\CommunicationCommands.cs" />
@@ -87,6 +97,8 @@
     <Compile Include="Converters\PauseTickerValueConverter.cs" />
     <Compile Include="Converters\TimeValueConverter.cs" />
     <Compile Include="DataModel\SerialDataModel.cs" />
+    <Compile Include="IoC\IoC.cs" />
+    <Compile Include="IoC\ViewModelLocator.cs" />
     <Compile Include="Pages\base\BasePage.cs" />
     <Compile Include="Pages\base\PageTypes.cs" />
     <Compile Include="Pages\DeveloperPage.xaml.cs">
@@ -99,9 +111,26 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SerialPort\SerilPortFunc.cs" />
+    <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Compile Include="ViewModel\base\BaseViewModel.cs" />
     <Compile Include="ViewModel\base\RelayCommand.cs" />
+    <Compile Include="ViewModel\ChatListItemViewModel.cs" />
+    <Compile Include="ViewModel\ChatListViewModel.cs" />
+    <Compile Include="ViewModel\Design\ChatListDesignModel.cs" />
+    <Compile Include="ViewModel\Design\ChatListItemDesignModel.cs" />
     <Compile Include="ViewModel\WindowViewModel.cs" />
+    <Page Include="Controls\ChatListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ChatListItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SideMenuControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Language\CH.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

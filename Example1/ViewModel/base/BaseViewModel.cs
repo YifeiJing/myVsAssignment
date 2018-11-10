@@ -2,7 +2,7 @@
 
 namespace Example1
 {
-    class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// Basic ViewModel fires property changed events as needed.
