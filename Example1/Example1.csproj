@@ -79,8 +79,10 @@
     <Compile Include="Controls\ChatListControl.xaml.cs" />
     <Compile Include="Controls\ChatListItemControl.xaml.cs" />
     <Compile Include="Controls\SideMenuControl.xaml.cs" />
+    <Compile Include="Converters\MapValueConverter.cs" />
     <Compile Include="Converters\StringToRGBValueConverter.cs" />
     <Compile Include="DataModel\AudioHelper\AudioHelper.cs" />
+    <Compile Include="DataModel\AudioHelper\VideoHelper.cs" />
     <Compile Include="DataModel\ComunicationCommand\CommandType.cs" />
     <Compile Include="DataModel\ComunicationCommand\CommunicationCommands.cs" />
     <Compile Include="DataModel\ComunicationCommand\DebugCommands.cs" />
@@ -97,12 +99,16 @@
     <Compile Include="Converters\PauseTickerValueConverter.cs" />
     <Compile Include="Converters\TimeValueConverter.cs" />
     <Compile Include="DataModel\SerialDataModel.cs" />
+    <Compile Include="DB\DataBaseControl.cs" />
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\ViewModelLocator.cs" />
     <Compile Include="Pages\base\BasePage.cs" />
     <Compile Include="Pages\base\PageTypes.cs" />
     <Compile Include="Pages\DeveloperPage.xaml.cs">
       <DependentUpon>DeveloperPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FirstPage.xaml.cs">
+      <DependentUpon>FirstPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
@@ -152,6 +158,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\DeveloperPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FirstPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,6 +256,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Audios\Verifying.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="images\background\Background.png" />
+    <Content Include="images\Maps\map01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\eyesright.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\eyesleft.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Videos\eyes.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

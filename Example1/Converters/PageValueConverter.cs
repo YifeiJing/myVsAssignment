@@ -13,6 +13,7 @@ namespace Example1
                 case PageTypes.LoginPage: return new LoginPage();
                 case PageTypes.GamePage: return new GamePage();
                 case PageTypes.DeveloperPage: return new DeveloperPage();
+                case PageTypes.FirstPage: return new FirstPage();
                 default: Debugger.Break();
                     return null;
             }

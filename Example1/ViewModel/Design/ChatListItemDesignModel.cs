@@ -11,6 +11,7 @@
             Initials = "YF";
             Message = "This new UI is pretty and beautiful!";
             ProfilePictureRGB = "3099c5";
+            Time = 10;
         }
     }
 }

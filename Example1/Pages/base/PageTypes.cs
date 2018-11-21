@@ -5,6 +5,7 @@
         LoginPage = 1,
         GamePage = 2,
         EndPage = 3,
-        DeveloperPage = 4
+        DeveloperPage = 4,
+        FirstPage = 5
     }
 }

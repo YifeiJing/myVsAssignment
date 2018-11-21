@@ -20,7 +20,10 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <!--Main content-->
                                 <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                                <!--Rank number-->
+                                <ColumnDefinition Width="Auto"/>
+
+                                </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Padding="8">
                                 <Border Background="{Binding ProfilePictureRGB, Converter={local:StringToRGBValueConverter}}"
                                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"
@@ -40,14 +43,27 @@
                                                 Foreground="{StaticResource WordBlueBrush}"
                                                 FontSize="{StaticResource SmallFontSize}"
                                                 FontFamily="{StaticResource Lato-regular}"/>
-                                    <TextBlock Text="{Binding Message}"
+                                        <TextBlock Text="{Binding Time}"
                                                 Foreground="{StaticResource ForeGroundMainBrush}"
                                                 FontSize="{StaticResource SmallFontSize}"
                                                 FontFamily="{StaticResource Lato-regular}"
                                                 TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>
                             </Border>
-                        </Grid>
+                                <Border Grid.Column="2" Padding="8">
+                                    <Border Background="Transparent"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}"
+                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}">
+                                        <TextBlock Text="{Binding Rank}"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                FontSize="{StaticResource LargeFontSize}"
+                                                FontFamily="{StaticResource Lato-regular}"
+                                                Foreground="{Binding ProfilePictureRGB, Converter={local:StringToRGBValueConverter}}"/>
+                                    </Border>
+
+                                </Border>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <EventTrigger RoutedEvent="MouseEnter">

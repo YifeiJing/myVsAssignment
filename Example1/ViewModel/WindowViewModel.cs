@@ -21,7 +21,12 @@ namespace Example1
         /// </summary>
         private string _CurrentLang = "EN";
 
+        /// <summary>
+        /// Initialize the static audio helper object
+        /// </summary>
         private AudioHelper mAudioHelper = new AudioHelper();
+
+        private VideoHelper mVideoHelper = null;
 
         #endregion
 
@@ -57,7 +62,7 @@ namespace Example1
         /// <summary>
         /// The current page
         /// </summary>
-        public PageTypes CurrentPage { set; get; } = PageTypes.LoginPage;
+        public PageTypes CurrentPage { set; get; } = PageTypes.FirstPage;
 
         /// <summary>
         /// The message between mbed
@@ -170,6 +175,21 @@ namespace Example1
         /// </summary>
         public bool SideMenuVisible { get; set; } = false;
 
+        /// <summary>
+        /// The states of the video in the first page
+        /// </summary>
+        public bool IsVideoPlaying { get; set; } = false;
+
+        /// <summary>
+        /// The number the map to display
+        /// </summary>
+        public int MapNumber { get; set; } = 0;
+
+        /// <summary>
+        /// The ID of the user
+        /// </summary>
+        public int UserID { get; set; } = 0;
+
         #endregion
 
         #region Commands
@@ -244,7 +264,10 @@ namespace Example1
         /// </summary>
         public ICommand PlayAudioHelperCommand { get; set; }
 
-
+        /// <summary>
+        /// The command on the icon, which change the visibility of the side menu
+        /// </summary>
+        public ICommand SideMenuCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -252,6 +275,14 @@ namespace Example1
         public WindowViewModel()
         {
             sp = new SerialPort(PortNumber,Baud);
+
+            SideMenuCommand = new RelayCommand(() =>
+            {
+                IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
+                var SideMenu = Application.Current.MainWindow.FindName("sidemenu") as SideMenuControl;
+                Application.Current.Dispatcher.Invoke(() => SideMenu.DataContext = new ChatListViewModel());
+                });
+
             MinimizeCommand = new RelayCommand(() => Application.Current.MainWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => Application.Current.MainWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
@@ -320,7 +351,7 @@ namespace Example1
             #region Serial port Datareceived Event handler
             ///
             //Deal with the coming data and send it to <para ReceMessage>
-            //<para DisplayMessage> show the accumulate message
+            //<@para DisplayMessage> show the accumulate message
             //Take charge of the current message from the port
             //Go to different pages
             ///
@@ -329,8 +360,10 @@ namespace Example1
                 ReceMessage = ReceiveData((s as SerialPort).BytesToRead);
                 DisplayMessage += ReceMessage;
 
-                if(ReceMessage == LoginCommands.Login)
+                if (ReceMessage == LoginCommands.Login)
                 {
+                    IsVerifying = false;
+
                     if (this.CurrentPage == PageTypes.GamePage)
                     {
                         return;
@@ -346,12 +379,14 @@ namespace Example1
                         }).Wait();
                     }
                 }
-                else if(ReceMessage == LoginCommands.IDVerify)
+                else if (ReceMessage == LoginCommands.IDVerify)
                 {
                     IsVerifying = true;
                 }
-                else if(ReceMessage == LoginCommands.Root)
+                else if (ReceMessage == LoginCommands.Root)
                 {
+                    IsVerifying = false;
+
                     if (this.CurrentPage == PageTypes.DeveloperPage)
                     {
                         return;
@@ -367,8 +402,77 @@ namespace Example1
                         }).Wait();
                     }
                 }
-                else if(ReceMessage == GameComands.Back || ReceMessage == DebugCommands.Back)
+                else if (ReceMessage == LoginCommands.ToFirstPage)
                 {
+                    IsVerifying = false;
+
+                    if (this.CurrentPage == PageTypes.FirstPage)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(async () =>
+                        {
+                            var mFrame = Application.Current.MainWindow.FindName("frame");
+                            BasePage page = (mFrame as Frame).Content as BasePage;
+                            await page.AnimatOut();
+                            this.CurrentPage = PageTypes.FirstPage;
+                        }).Wait();
+                    }
+                }
+                else if (ReceMessage == LoginCommands.PlayMidAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        MidEyePlay());
+                    }
+                }
+                else if (ReceMessage == LoginCommands.PlayLeftAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        LeftEyePlay());
+                    }
+                }
+                else if (ReceMessage == LoginCommands.PlayRightAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        RightEyePlay());
+                    }
+                }
+                else if (ReceMessage == LoginCommands.PlayAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        PlayVideo());
+                    }
+                }
+                else if (ReceMessage == LoginCommands.PauseAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        PauseVideo());
+                    }
+                }
+                else if (ReceMessage == LoginCommands.StopAnime)
+                {
+                    if (CurrentPage == PageTypes.FirstPage)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        StopVideo());
+                    }
+                }
+                else if (ReceMessage == GameComands.Back || ReceMessage == DebugCommands.Back)
+                {
+                    IsVerifying = false;
+
                     if (this.CurrentPage == PageTypes.LoginPage)
                     {
                         return;
@@ -384,25 +488,33 @@ namespace Example1
                         }).Wait();
                     }
                 }
-                else if(ReceMessage == GameComands.GameStart)
+                else if (ReceMessage == GameComands.GameStart)
                 {
                     GameStart();
                 }
-                else if(ReceMessage == GameComands.GameEnd)
+                else if (ReceMessage == GameComands.GameEnd)
                 {
                     GameEnd();
                 }
-                else if(ReceMessage == GameComands.GamePause)
+                else if (ReceMessage == GameComands.GamePause)
                 {
                     GamePause();
                 }
-                else if(ReceMessage == GameComands.OutRange)
+                else if (ReceMessage == GameComands.OutRange)
                 {
                     OutOfRange();
                 }
-                else if(ReceMessage == GameComands.GetBack)
+                else if (ReceMessage == GameComands.GetBack)
                 {
                     GetBack();
+                }
+                else if (ReceMessage == "mp000")
+                {
+                    MapNumber = 0;
+                }
+                else if (ReceMessage == "us001")
+                {
+                    UserID = 1;
                 }
                 else
                 {
@@ -466,6 +578,54 @@ namespace Example1
             SendDataCommand = new RelayCommand(() => SendData());
 
             #endregion
+            //sp.Open();
+            
+            Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Space)
+            {
+                mVideoHelper = new VideoHelper();
+                mVideoHelper.PlayVideoMid();
+                IsVideoPlaying = true;
+            }
+            if(e.Key == Key.Q)
+            {
+                if(IsVideoPlaying)
+                {
+                    mVideoHelper.PlayVideoLeft();
+                    IsVideoPlaying = false;
+                }
+                else
+                {
+                    mVideoHelper.PlayVideoRight();
+                    IsVideoPlaying = true;
+                }
+            }
+            if (e.Key == Key.W)
+            {
+                if (IsVideoPlaying)
+                {
+                    mVideoHelper.PauseVideo();
+                    IsVideoPlaying = false;
+                }
+                else
+                {
+                    mVideoHelper.PlayVideo();
+                    IsVideoPlaying = true;
+                }
+            }
+            if (e.Key == Key.E)
+            {
+                CurrentPage = PageTypes.LoginPage;
+            }
+            if (e.Key == Key.R)
+            {
+                mVideoHelper = new VideoHelper();
+                sp.Write("a");
+            }
         }
 
         #endregion
@@ -528,6 +688,8 @@ namespace Example1
             Application.Current.Resources.MergedDictionaries[0] = dict;
         }
 
+        #region GamePage functions
+
         /// <summary>
         /// The the user press the start game button
         /// The command runs this method
@@ -547,6 +709,8 @@ namespace Example1
         {
             IsPlaying = false;
             IsGameEnd = true;
+            var connection = new DataBaseControl();
+            connection.access.Change_sheet1_time(Ticker, UserID.ToString());
         }
 
         /// <summary>
@@ -593,6 +757,33 @@ namespace Example1
             GameResume();
             OutOfRangeTick = 50;
         }
+
+        /// <summary>
+        /// The ticker begin when the player get out of the sensor range
+        /// </summary>
+        private void OutOfRangeTicker()
+        {
+            Task.Run(async () =>
+            {
+                while (IsOutOfRange)
+                {
+                    await Task.Delay(200);
+                    OutOfRangeTick--;
+                    if (OutOfRangeTick < 0)
+                    {
+                        IsOutOfRange = false;
+                        IsPlaying = false;
+                        IsGameEnd = true;
+                        sp.Write("end__");
+                        break;
+                    }
+                }
+            });
+        }
+
+        #endregion
+
+        #region OperationPage function
 
         /// <summary>
         /// Move servo in the debug mode
@@ -646,28 +837,50 @@ namespace Example1
                 return;
         }
 
+        #endregion
+
+        
+        #region FirstPgae commands
         /// <summary>
-        /// The ticker begin when the player get out of the sensor range
+        /// The anime in the first page, three animes are used
         /// </summary>
-        private void OutOfRangeTicker()
+        private void MidEyePlay()
         {
-            Task.Run(async () =>
-            {
-                while (IsOutOfRange)
-                {
-                    await Task.Delay(200);
-                    OutOfRangeTick--;
-                    if (OutOfRangeTick < 0)
-                    {
-                        IsOutOfRange = false;
-                        IsPlaying = false;
-                        IsGameEnd = true;
-                        sp.Write("end__");
-                        break;
-                    }
-                }
-            });
+            mVideoHelper.PlayVideoMid();
+            IsVideoPlaying = true;
         }
+
+        private void LeftEyePlay()
+        {
+            mVideoHelper.PlayVideoLeft();
+            IsVideoPlaying = true;
+        }
+
+        private void RightEyePlay()
+        {
+            mVideoHelper.PlayVideoRight();
+            IsVideoPlaying = true;
+        }
+
+        private void PlayVideo()
+        {
+            mVideoHelper.PlayVideo();
+            IsVideoPlaying = true;
+        }
+
+        private void PauseVideo()
+        {
+            mVideoHelper.PauseVideo();
+            IsVideoPlaying = false;
+        }
+
+        private void StopVideo()
+        {
+            mVideoHelper.StopVideo();
+            IsVideoPlaying = false;
+        }
+        #endregion
+
         #endregion
     }
 }

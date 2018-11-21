@@ -15,6 +15,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <!--Top menu-->
@@ -25,7 +26,9 @@
                             </TextBlock>
                         </Viewbox>
                     </Grid>
-                    <ContentPresenter Grid.Row="1"/>
+                    
+                    <!-- List -->
+                    <ContentPresenter Grid.Row="2"/>
                 </Grid>
             </Border>
 

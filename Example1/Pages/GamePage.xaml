@@ -23,10 +23,16 @@
                 <Border Grid.Row="1" Padding="10">
                     <StackPanel>
                         <Grid>
-                            <Rectangle Width="500" Height="400" Fill="{StaticResource ForeGroundMainBrush}" RadiusX="10" RadiusY="10">
-                            </Rectangle>
+                            <!--<Rectangle Width="500" Height="400" RadiusX="10" RadiusY="10">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{Binding MapNumber, Converter={local:MapValueConverter}}">
+                                    
+                                    </ImageBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>-->
+                            <Image Width="500" Height="400" Source="{Binding MapNumber, Converter={local:MapValueConverter}}"/>
                             <TextBlock Text="{Binding Ticker,Converter={local:TimeValueConverter}}" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
-                            <TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
+                            <!--<TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>-->
                             <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
                                 <StackPanel>
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kOutOfRange}"/>

@@ -25,7 +25,7 @@
                            FontFamily="{StaticResource Lato-Hairline}"
                            Foreground="{StaticResource ForeGroundDarkBrush}"
                            TextAlignment="Center"/>
-                <Button Style="{StaticResource MainButton}" Margin="0 60 0 30" Padding="0 20 0 20" Content="{DynamicResource kIdentification}" Command="{Binding ChangeToDeveloperCommand}" IsEnabled="{Binding IsVerifying, Converter={local:StatusValueConverter}}"/>
+                <Button Style="{StaticResource MainButton}" Margin="0 60 0 30" Padding="0 20 0 20" Content="{DynamicResource kIdentification}" Command="{Binding ChangeToGameCommand}" IsEnabled="{Binding IsVerifying, Converter={local:StatusValueConverter}}"/>
             </StackPanel>
             
         </Border>

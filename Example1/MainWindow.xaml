@@ -27,7 +27,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" Padding="5" Style="{StaticResource SystemIconButton}">
+                                    <Button Grid.Column="0" Padding="5" Style="{StaticResource SystemIconButton}" Command="{Binding SideMenuCommand}">
                                         <Image Source="images/logo/logo_laugh_regular.png"/>
                                     </Button>
                                     <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="3">
@@ -102,7 +102,7 @@
             <Frame Grid.Column="1" x:Name="frame" NavigationUIVisibility="Hidden" JournalOwnership="UsesParentJournal" Content="{Binding CurrentPage, Converter={local:PageValueConverter}}"/>
 
 
-            <local:SideMenuControl local:LegendListAnimationAttachedProperty.Value ="{Binding 
+            <local:SideMenuControl x:Name="sidemenu" local:LegendListAnimationAttachedProperty.Value ="{Binding 
                 ApplicationViewModel.SideMenuVisible, 
                 Source={x:Static local:ViewModelLocator.Instance}}">
                 <local:ChatListControl/>
