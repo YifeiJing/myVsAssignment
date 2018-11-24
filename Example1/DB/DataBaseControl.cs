@@ -30,6 +30,8 @@ namespace Example1
 
     class Access
     {
+        #region public members
+
         public List<string> IDs = new List<string>();
         public List<string> Names = new List<string>();
         public List<int> Ages = new List<int>();
@@ -37,10 +39,15 @@ namespace Example1
         public List<int> Times = new List<int>();
         public List<string> Ranks = new List<string>();
 
+        #endregion
+
         static string connectionstring = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\70400\\Documents\\Test.mdb";
         OleDbConnection oleDb = new OleDbConnection(connectionstring);
 
-        public Access() //构造函数
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Access() 
         {
             oleDb.Open();
             Findrank();

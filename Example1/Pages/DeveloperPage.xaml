@@ -35,7 +35,7 @@
                     <Button Content="{StaticResource kApply}" Style="{StaticResource DeveloperButton}" Command="{Binding PortOpenCommand}"/>
                     <Button Command="{Binding PortCloseCommand}" Content="{StaticResource kReset}" Style="{StaticResource DeveloperButton}"/>
                     <Button Command="{Binding DisplayMessageClearCommand}" Content="{StaticResource kClear}" Style="{StaticResource DeveloperButton}"/>
-                    <Button Command="{Binding ChangeToLoginCommand}" Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
+                    <Button Command="{Binding HelperCommand}" Content="{StaticResource kHelp}" Style="{StaticResource DeveloperButton}"/>
                 </StackPanel>
                 <Border Grid.Column="1" BorderThickness="1" Margin="30">
                     <Border.BorderBrush>

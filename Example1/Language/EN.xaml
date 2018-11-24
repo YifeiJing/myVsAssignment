@@ -21,5 +21,8 @@
     <system:String x:Key="kPortOff">Off</system:String>
     <system:String x:Key="kVerifying">Verifying</system:String>
     <system:String x:Key="kOutOfRange">You are out of Range!</system:String>
+    <system:String x:Key="kGameSucceed">Congratulations!</system:String>
+    <system:String x:Key="kGameFailed">You are failed!</system:String>
+    <system:String x:Key="kComplete">Complete</system:String>
 
 </ResourceDictionary>

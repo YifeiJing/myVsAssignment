@@ -36,5 +36,10 @@
         /// receive when the game end and the user complete the game successfully
         /// </summary>
         public static string GameFailed { get; } = "gmfal";
+
+        /// <summary>
+        /// When the user complete the behavior of fetching the gift, click the button and send the message
+        /// </summary>
+        public static string GiftFetched { get; } = "compl";
     }
 }

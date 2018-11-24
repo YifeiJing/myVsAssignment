@@ -190,6 +190,12 @@ namespace Example1
         /// </summary>
         public int UserID { get; set; } = 0;
 
+        /// <summary>
+        /// Game end status
+        /// </summary>
+        public bool IsGameSucceed { get; set; } = false;
+        public bool IsGameFailed { get; set; } = false;
+
         #endregion
 
         #region Commands
@@ -230,6 +236,11 @@ namespace Example1
         public ICommand ChangeToGameCommand { set; get; }
 
         /// <summary>
+        /// The command which change the current window to First Window
+        /// </summary>
+        public ICommand ChangeToFirstCommand { set; get; }
+
+        /// <summary>
         /// The command which change the current language
         /// </summary>
         public ICommand ChangeLanguageCommand { set; get; }
@@ -268,6 +279,22 @@ namespace Example1
         /// The command on the icon, which change the visibility of the side menu
         /// </summary>
         public ICommand SideMenuCommand { get; set; }
+
+        /// <summary>
+        /// Display helper message in the debug mode
+        /// </summary>
+        public ICommand HelperCommand { get; set; }
+
+        /// <summary>
+        /// After the user insert the card, touch the button to verify the card
+        /// </summary>
+        public ICommand VerifyCommand { get; set; }
+
+        /// <summary>
+        /// When the user finishes fetching the gift
+        /// </summary>
+        public ICommand FetchedCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -342,6 +369,21 @@ namespace Example1
                     BasePage page = (mFrame as Frame).Content as BasePage;
                     await page.AnimatOut();
                     this.CurrentPage = PageTypes.GamePage;
+                }
+
+            });
+            ChangeToFirstCommand = new RelayCommand(async () =>
+            {
+                if (this.CurrentPage == PageTypes.FirstPage)
+                {
+                    return;
+                }
+                else
+                {
+                    var mFrame = Application.Current.MainWindow.FindName("frame");
+                    BasePage page = (mFrame as Frame).Content as BasePage;
+                    await page.AnimatOut();
+                    this.CurrentPage = PageTypes.FirstPage;
                 }
 
             });
@@ -420,6 +462,8 @@ namespace Example1
                             this.CurrentPage = PageTypes.FirstPage;
                         }).Wait();
                     }
+                    IsGameSucceed = false;
+                    IsGameFailed = false;
                 }
                 else if (ReceMessage == LoginCommands.PlayMidAnime)
                 {
@@ -508,13 +552,101 @@ namespace Example1
                 {
                     GetBack();
                 }
-                else if (ReceMessage == "mp000")
+                else if (ReceMessage == GameComands.GameSucceed)
+                {
+                    IsGameSucceed = true;
+                }
+                else if (ReceMessage == GameComands.GameFailed)
+                {
+                    IsGameFailed = true;
+                }
+                else if (ReceMessage == CommunicationCommands.Map00)
                 {
                     MapNumber = 0;
                 }
-                else if (ReceMessage == "us001")
+                else if (ReceMessage == CommunicationCommands.Map01)
+                {
+                    MapNumber = 0;
+                }
+                else if (ReceMessage == CommunicationCommands.Map02)
+                {
+                    MapNumber = 0;
+                }
+                else if (ReceMessage == CommunicationCommands.Map03)
+                {
+                    MapNumber = 0;
+                }
+                else if (ReceMessage == CommunicationCommands.Map04)
+                {
+                    MapNumber = 0;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID01)
                 {
                     UserID = 1;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID02)
+                {
+                    UserID = 2;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID03)
+                {
+                    UserID = 3;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID04)
+                {
+                    UserID = 4;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID05)
+                {
+                    UserID = 5;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID06)
+                {
+                    UserID = 6;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID07)
+                {
+                    UserID = 7;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID08)
+                {
+                    UserID = 8;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID09)
+                {
+                    UserID = 9;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID10)
+                {
+                    UserID = 10;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID11)
+                {
+                    UserID = 11;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID12)
+                {
+                    UserID = 12;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID13)
+                {
+                    UserID = 13;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID14)
+                {
+                    UserID = 14;
+                }
+                else if (ReceMessage == CommunicationCommands.UserID15)
+                {
+                    UserID = 15;
+                }
+                else if (ReceMessage == GameComands.GameFailed)
+                {
+                    IsGameFailed = true;
+                }
+                else if (ReceMessage == GameComands.GameSucceed)
+                {
+                    IsGameSucceed = true;
                 }
                 else
                 {
@@ -576,11 +708,31 @@ namespace Example1
             });
             DisplayMessageClearCommand = new RelayCommand(() => DisplayMessage = string.Empty);
             SendDataCommand = new RelayCommand(() => SendData());
+            HelperCommand = new RelayCommand(() =>
+            {
+                if (sp.IsOpen)
+                {
+                    sp.Write("?");
+                }
+                else
+                {
+                    try
+                    {
+                        sp.Open();
+                    }
+                    catch { }
+                    sp.Write("?");
+                }
+            });
 
-            #endregion
-            //sp.Open();
-            
-            Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
+            VerifyCommand = new RelayCommand(() => sp.Write(LoginCommands.IDVerify));
+            FetchedCommand = new RelayCommand(() => sp.Write(GameComands.GiftFetched));
+
+
+        #endregion
+        //sp.Open();
+
+        Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -696,6 +848,7 @@ namespace Example1
         /// </summary>
         private void GameStart()
         {
+            sp.Write("a");
             Ticker = 0;
             IsPlaying = true;
             IsOutOfRange = false;
@@ -710,7 +863,8 @@ namespace Example1
             IsPlaying = false;
             IsGameEnd = true;
             var connection = new DataBaseControl();
-            connection.access.Change_sheet1_time(Ticker, UserID.ToString());
+            connection.access.Change_sheet1_time(Ticker/5, UserID.ToString());
+            connection.access.rank();
         }
 
         /// <summary>

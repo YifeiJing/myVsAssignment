@@ -26,10 +26,18 @@
                             <!--<Rectangle Width="500" Height="400" RadiusX="10" RadiusY="10">
                                 <Rectangle.Fill>
                                     <ImageBrush ImageSource="{Binding MapNumber, Converter={local:MapValueConverter}}">
-                                    
                                     </ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>-->
+                            <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kGameSucceed}"/>
+                                    <Button Style="{StaticResource GameButton}" Content="{DynamicResource kComplete}" Width="200" Height="60" Padding="0" Margin="0 100 0 0"/>
+                                </StackPanel>
+                            </Border>
+                            <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsGameFailed, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsGameFailed, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kGameFailed}"/>
+                            </Border>
                             <Image Width="500" Height="400" Source="{Binding MapNumber, Converter={local:MapValueConverter}}"/>
                             <TextBlock Text="{Binding Ticker,Converter={local:TimeValueConverter}}" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
                             <!--<TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>-->

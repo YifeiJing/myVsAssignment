@@ -21,6 +21,9 @@
     <system:String x:Key="kPortOff">关闭</system:String>
     <system:String x:Key="kVerifying">认证中</system:String>
     <system:String x:Key="kOutOfRange">你不在距离范围内！</system:String>
+    <system:String x:Key="kGameSucceed">你成功了！</system:String>
+    <system:String x:Key="kGameFailed">你失败了！</system:String>
+    <system:String x:Key="kComplete">完成</system:String>
 
 
 </ResourceDictionary>

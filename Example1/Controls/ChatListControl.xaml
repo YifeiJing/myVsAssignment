@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Example1"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
-    <Grid d:DataContext="{x:Static local:ChatListDesignModel.Instance}" Background="{StaticResource ForeGroundLightBrush}">
+    <Grid d:DataContext="{x:Static local:ChatListDesignModel.Instance}" 
+          Background="{StaticResource ForeGroundLightBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>

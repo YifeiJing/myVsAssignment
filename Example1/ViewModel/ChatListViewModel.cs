@@ -10,6 +10,7 @@ namespace Example1
         {
             Items = new List<ChatListItemViewModel>();
             DataBaseControl db = new DataBaseControl();
+            db.access.rank();
             for (int i = 0; i != 16; i++)
             {
                 Items.Add(new ChatListItemViewModel(db.access.Names[i], db.access.Ranks[i], db.access.Times[i], db.access.IDs[i].ToString()));
