@@ -80,6 +80,7 @@
     <Compile Include="Controls\ChatListItemControl.xaml.cs" />
     <Compile Include="Controls\SideMenuControl.xaml.cs" />
     <Compile Include="Converters\MapValueConverter.cs" />
+    <Compile Include="Converters\PlayButtonValueConverter.cs" />
     <Compile Include="Converters\StringToRGBValueConverter.cs" />
     <Compile Include="DataModel\AudioHelper\AudioHelper.cs" />
     <Compile Include="DataModel\AudioHelper\VideoHelper.cs" />
@@ -255,13 +256,46 @@
     <Resource Include="images\background\emoji-background.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Audios\hello.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\insert.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\out.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\play.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\thank.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Audios\Verifying.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="images\background\Background.png" />
+    <Content Include="Audios\你好.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\游戏.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\请插入.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\谢谢.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audios\超出.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="images\Maps\map01.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="images\Maps\map02.png" />
+    <Resource Include="images\Maps\map03.png" />
+    <Resource Include="images\Maps\map04.png" />
     <Content Include="Videos\eyesright.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

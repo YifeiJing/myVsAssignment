@@ -196,6 +196,11 @@ namespace Example1
         public bool IsGameSucceed { get; set; } = false;
         public bool IsGameFailed { get; set; } = false;
 
+        /// <summary>
+        /// The status of the start button
+        /// </summary>
+        public bool IsStarted { get; set; } = false;
+
         #endregion
 
         #region Commands
@@ -302,12 +307,21 @@ namespace Example1
         public WindowViewModel()
         {
             sp = new SerialPort(PortNumber,Baud);
+            var frame = Application.Current.MainWindow.FindName("frame") as Frame;
+            frame.Navigated += (s, ee) => ((Frame)s).NavigationService.RemoveBackEntry();
 
             SideMenuCommand = new RelayCommand(() =>
             {
-                IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
-                var SideMenu = Application.Current.MainWindow.FindName("sidemenu") as SideMenuControl;
-                Application.Current.Dispatcher.Invoke(() => SideMenu.DataContext = new ChatListViewModel());
+                if (IoC.Get<ApplicationViewModel>().SideMenuVisible)
+                {
+                    IoC.Get<ApplicationViewModel>().SideMenuVisible = false;
+                }
+                else
+                {
+                    IoC.Get<ApplicationViewModel>().SideMenuVisible = true;
+                    var SideMenu = Application.Current.MainWindow.FindName("sidemenu") as SideMenuControl;
+                    Application.Current.Dispatcher.Invoke(() => SideMenu.DataContext = new ChatListViewModel());
+                }
                 });
 
             MinimizeCommand = new RelayCommand(() => Application.Current.MainWindow.WindowState = WindowState.Minimized);
@@ -349,10 +363,12 @@ namespace Example1
                 }
                 else
                 {
+                    sp.Write("begin");
                     var mFrame = Application.Current.MainWindow.FindName("frame");
                     BasePage page = (mFrame as Frame).Content as BasePage;
                     await page.AnimatOut();
                     this.CurrentPage = PageTypes.LoginPage;
+                    AudioHelper.Insert();
                 }
 
             });
@@ -385,14 +401,14 @@ namespace Example1
                     await page.AnimatOut();
                     this.CurrentPage = PageTypes.FirstPage;
                 }
-
+                //mVideoHelper = new VideoHelper();
             });
 
             #endregion
 
             #region Serial port Datareceived Event handler
             ///
-            //Deal with the coming data and send it to <para ReceMessage>
+            //Deal with the coming data and send it to <@para ReceMessage>
             //<@para DisplayMessage> show the accumulate message
             //Take charge of the current message from the port
             //Go to different pages
@@ -412,12 +428,16 @@ namespace Example1
                     }
                     else
                     {
+                        IsGameEnd = false;
+                        IsStarted = false;
+                        Ticker = 0;
                         Application.Current.Dispatcher.Invoke(async () =>
                         {
                             var mFrame = Application.Current.MainWindow.FindName("frame");
                             BasePage page = (mFrame as Frame).Content as BasePage;
                             await page.AnimatOut();
                             this.CurrentPage = PageTypes.GamePage;
+                            AudioHelper.Play();
                         }).Wait();
                     }
                 }
@@ -442,6 +462,7 @@ namespace Example1
                             await page.AnimatOut();
                             this.CurrentPage = PageTypes.DeveloperPage;
                         }).Wait();
+                        DisplayMessage = String.Empty;
                     }
                 }
                 else if (ReceMessage == LoginCommands.ToFirstPage)
@@ -461,16 +482,28 @@ namespace Example1
                             await page.AnimatOut();
                             this.CurrentPage = PageTypes.FirstPage;
                         }).Wait();
+                        Task.Run(async () =>
+                        {
+                            await Task.Delay(1000);
+                            //Application.Current.Dispatcher.Invoke(() => AudioHelper.Hello());
+                            Application.Current.Dispatcher.Invoke(() => mVideoHelper = new VideoHelper());
+                            
+                        });
                     }
                     IsGameSucceed = false;
                     IsGameFailed = false;
+                    
                 }
                 else if (ReceMessage == LoginCommands.PlayMidAnime)
                 {
                     if (CurrentPage == PageTypes.FirstPage)
                     {
                         Application.Current.Dispatcher.Invoke(() =>
-                        MidEyePlay());
+                        {
+                            MidEyePlay();
+                           
+                            AudioHelper.Hello();
+                            });
                     }
                 }
                 else if (ReceMessage == LoginCommands.PlayLeftAnime)
@@ -643,10 +676,13 @@ namespace Example1
                 else if (ReceMessage == GameComands.GameFailed)
                 {
                     IsGameFailed = true;
+                    IsPlaying = false;
                 }
                 else if (ReceMessage == GameComands.GameSucceed)
                 {
                     IsGameSucceed = true;
+                    IsPlaying = false;
+                    Application.Current.Dispatcher.Invoke(() => AudioHelper.Thanks());
                 }
                 else
                 {
@@ -730,7 +766,8 @@ namespace Example1
 
 
         #endregion
-        //sp.Open();
+            sp.Open();
+            IsPortOpen = true;
 
         Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
         }
@@ -777,6 +814,7 @@ namespace Example1
             {
                 mVideoHelper = new VideoHelper();
                 sp.Write("a");
+                Application.Current.MainWindow.KeyDown -= MainWindow_KeyDown;
             }
         }
 
@@ -838,6 +876,7 @@ namespace Example1
             }
 
             Application.Current.Resources.MergedDictionaries[0] = dict;
+            AudioHelper.ChangeLanguage();
         }
 
         #region GamePage functions
@@ -848,11 +887,14 @@ namespace Example1
         /// </summary>
         private void GameStart()
         {
+            
             sp.Write("a");
             Ticker = 0;
             IsPlaying = true;
             IsOutOfRange = false;
+            IsStarted = true;
             TimeTicker();
+            
         }
 
         /// <summary>
@@ -862,9 +904,11 @@ namespace Example1
         {
             IsPlaying = false;
             IsGameEnd = true;
+            //AudioHelper.Thanks();
             var connection = new DataBaseControl();
             connection.access.Change_sheet1_time(Ticker/5, UserID.ToString());
             connection.access.rank();
+            
         }
 
         /// <summary>
@@ -898,6 +942,7 @@ namespace Example1
             GamePause();
             OutOfRangeTicker();
             IsOutOfRange = true;
+            Application.Current.Dispatcher.Invoke(() => AudioHelper.Out());
         }
 
         /// <summary>
@@ -909,6 +954,7 @@ namespace Example1
                 return;
             IsOutOfRange = false;
             GameResume();
+            //TimeTicker();
             OutOfRangeTick = 50;
         }
 
@@ -929,6 +975,7 @@ namespace Example1
                         IsPlaying = false;
                         IsGameEnd = true;
                         sp.Write("end__");
+                        OutOfRangeTick = 50;
                         break;
                     }
                 }

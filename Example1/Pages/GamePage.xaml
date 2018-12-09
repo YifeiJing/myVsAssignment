@@ -29,16 +29,11 @@
                                     </ImageBrush>
                                 </Rectangle.Fill>
                             </Rectangle>-->
-                            <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kGameSucceed}"/>
-                                    <Button Style="{StaticResource GameButton}" Content="{DynamicResource kComplete}" Width="200" Height="60" Padding="0" Margin="0 100 0 0"/>
-                                </StackPanel>
-                            </Border>
+                            <Image Width="500" Height="400" Source="{Binding MapNumber, Converter={local:MapValueConverter}}"/>
+
                             <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsGameFailed, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsGameFailed, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kGameFailed}"/>
                             </Border>
-                            <Image Width="500" Height="400" Source="{Binding MapNumber, Converter={local:MapValueConverter}}"/>
                             <TextBlock Text="{Binding Ticker,Converter={local:TimeValueConverter}}" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>
                             <!--<TextBlock Text="{Binding PlayerScore,Converter={local:ScoreValueConverter}}" HorizontalAlignment="Right" FontFamily="{StaticResource Lato-regular}" FontSize="{StaticResource LargeFontSize}" Margin="20 10"/>-->
                             <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
@@ -47,9 +42,15 @@
                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsOutOfRange, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{Binding OutOfRangeTick, Converter={local:PauseTickerValueConverter}}"/>
                                 </StackPanel>
                             </Border>
+                            <Border CornerRadius="10" Background="{StaticResource WordBlueBrush}" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}, FallbackValue=Collapsed}">
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsGameSucceed, Converter={local:OutOfRangeBoolValueConverter}}" FontSize="60" Foreground="{StaticResource WordRedBrush}" Text="{DynamicResource kGameSucceed}"/>
+                                    <Button Style="{StaticResource GameButton}" Content="{DynamicResource kComplete}" Width="200" Height="60" Padding="0" Margin="0 100 0 0" Command="{Binding FetchedCommand}"/>
+                                </StackPanel>
+                            </Border>
                         </Grid>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Style="{StaticResource GameButton}" Content="{DynamicResource kStart}" Margin="20 20 20 20" Padding="0" Width="100" Height="60" IsEnabled="{Binding IsPlaying, Converter={local:StatusValueConverter}}" Command="{Binding GameStartCommand}"/>
+                            <Button Style="{StaticResource GameButton}" Content="{DynamicResource kStart}" Margin="0 20 0 20" Padding="0" Width="100" Height="60" Command="{Binding GameStartCommand}" IsEnabled="{Binding IsStarted, Converter={local:StatusValueConverter}}"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
